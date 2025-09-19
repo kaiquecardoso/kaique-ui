@@ -1,18 +1,6 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-
-export interface FlashMessageData {
-  message: string;
-  icon?: ReactNode;
-  type: "success" | "error" | "warning" | "info";
-  visible: boolean;
-  duration?: number;
-}
-
-interface FlashMessageContextType {
-  flashMessage: FlashMessageData;
-  showMessage: (data: Omit<FlashMessageData, "visible">) => void;
-  hideMessage: () => void;
-}
+import { FLASH_MESSAGE_CONFIG } from "../constants";
+import { FlashMessageContextType, FlashMessageData } from "../types/types";
 
 const FlashMessageContext = createContext<FlashMessageContextType | undefined>(
   undefined
@@ -27,7 +15,7 @@ export function FlashMessageProvider({ children }: FlashMessageProviderProps) {
     message: "",
     type: "info",
     visible: false,
-    duration: 3000,
+    duration: FLASH_MESSAGE_CONFIG.defaultDuration,
   });
 
   const showMessage = (data: Omit<FlashMessageData, "visible">) => {

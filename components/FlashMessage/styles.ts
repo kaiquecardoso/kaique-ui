@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
+import { DYNAMIC_ISLAND_CONFIG } from "./constants";
 
 const { width } = Dimensions.get("window");
 
@@ -65,5 +66,12 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
     textAlign: "center",
+  },
+  dynamicIslandRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+    paddingHorizontal: DYNAMIC_ISLAND_CONFIG.paddingHorizontal,
+    gap: DYNAMIC_ISLAND_CONFIG.gap,
   },
 });

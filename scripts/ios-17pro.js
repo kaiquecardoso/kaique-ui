@@ -29,3 +29,4 @@ try {
   console.error('❌ Erro ao iniciar o simulador:', error.message);
   process.exit(1);
 }
+

@@ -8,8 +8,10 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import FlashMessageGlobal from "@/components/flash-message-global";
-import { FlashMessageProvider } from "@/contexts/flash-message-context";
+import {
+  FlashMessageGlobal,
+  FlashMessageProvider,
+} from "@/components/FlashMessage";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
 export const unstable_settings = {

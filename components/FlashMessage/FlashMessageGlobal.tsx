@@ -1,6 +1,6 @@
-import { useFlashMessage } from "@/contexts/flash-message-context";
 import React from "react";
-import FlashMessage from "./flash-message";
+import FlashMessage from "./FlashMessage";
+import { useFlashMessage } from "./contexts/FlashMessageContext";
 
 export default function FlashMessageGlobal() {
   const { flashMessage, hideMessage } = useFlashMessage();

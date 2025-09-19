@@ -49,3 +49,4 @@ xcrun simctl list devices | grep "iPhone 17 Pro" | grep "Booted"
 - O Expo não suporta a opção `--simulator` diretamente
 - O simulador deve estar iniciado antes de executar `npm run ios`
 - O script `ios:17pro` garante que o iPhone 17 Pro esteja ativo antes de iniciar o Expo
+

@@ -1,6 +1,6 @@
+import { useFlashMessage } from "@/components/FlashMessage";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { useFlashMessage } from "@/contexts/flash-message-context";
 import { useDynamicIsland } from "@/hooks/use-dynamic-island";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -32,7 +32,8 @@ export default function TabTwoScreen() {
 
   const handleInfoMessage = () => {
     showMessage({
-      message: "Informação importante para você",
+      message:
+        "Informação importante para você Informação importante para você Informação importante para você Informação importante para você Informação importante para você Informação importante para você Informação importante para você Informação importante para você Informação importante para você ",
       type: "info",
     });
   };
