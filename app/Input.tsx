@@ -2,7 +2,6 @@ import { ThemedText } from "@/components/themed-text";
 import { useTheme } from "@/contexts/ThemeContext";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, TextInput, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function InputScreen() {
   const [name, setName] = useState("");
@@ -14,7 +13,7 @@ export default function InputScreen() {
   const styles = createStyles(colors);
 
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+    <View style={styles.container}>
       <ScrollView 
         style={styles.scrollView} 
         showsVerticalScrollIndicator={false}
@@ -129,7 +128,7 @@ export default function InputScreen() {
             </View>
           </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -137,9 +136,11 @@ const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.systemGroupedBackground,
+    
   },
   scrollView: {
     flex: 1,
+    
   },
   scrollContent: {
     padding: 20,
