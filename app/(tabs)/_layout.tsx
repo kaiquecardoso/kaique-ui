@@ -14,14 +14,11 @@ export default function TabLayout() {
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="components">
         <Label>Componentes</Label>
-        <Icon sf="house.fill" drawable="ic_menu_mylocation" />
+        <Icon sf="square.grid.2x2.fill" drawable="ic_menu_mylocation" />
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="explore">
-        <Label>Explore</Label>
-        <Icon
-          sf="gearshape.arrow.trianglehead.2.clockwise.rotate.90"
-          drawable="ic_menu_mylocation"
-        />
+      <NativeTabs.Trigger name="settings">
+        <Label>Settings</Label>
+        <Icon sf="gear" drawable="ic_settings" />
       </NativeTabs.Trigger>
     </NativeTabs>
   );

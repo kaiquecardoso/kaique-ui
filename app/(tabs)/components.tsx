@@ -1,170 +1,178 @@
-import { useFlashMessage } from "@/components/FlashMessage";
 import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { useDynamicIsland } from "@/hooks/use-dynamic-island";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+    Platform,
+    ScrollView,
+    StyleSheet,
+    TouchableOpacity,
+    View
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function TabTwoScreen() {
-  const { showMessage } = useFlashMessage();
-  const { hasDynamicIsland, safeAreaTop } = useDynamicIsland();
+interface ComponentItem {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  onPress: () => void;
+}
 
-  const handleSuccessMessage = () => {
-    showMessage({
-      message: "Operação realizada com sucesso!",
-      type: "success",
-    });
-  };
+export default function ComponentsScreen() {
+  const router = useRouter();
+  const { colors, isDark } = useTheme();
+  const styles = createStyles(colors);
 
-  const handleErrorMessage = () => {
-    showMessage({
-      message: "Erro ao processar solicitação",
-      type: "error",
-    });
-  };
+  const components: ComponentItem[] = [
+    {
+      id: "flashmessage",
+      title: "FlashMessage",
+      description: "Sistema de notificações e mensagens flash",
+      icon: "💬",
+      onPress: () => router.push("/FlashMessage"),
+    },
+    {
+      id: "button",
+      title: "Button",
+      description: "Componente de botão personalizado",
+      icon: "🔘",
+      onPress: () => router.push("/Button"),
+    },
+    {
+      id: "input",
+      title: "Input",
+      description: "Campo de entrada de texto",
+      icon: "📝",
+      onPress: () => router.push("/Input"),
+    },
+    {
+      id: "card",
+      title: "Card",
+      description: "Cartão de conteúdo",
+      icon: "📄",
+      onPress: () => router.push("/Card"),
+    },
+  ];
 
-  const handleWarningMessage = () => {
-    showMessage({
-      message: "Atenção: Verifique os dados inseridos",
-      type: "warning",
-    });
-  };
-
-  const handleInfoMessage = () => {
-    showMessage({
-      message:
-        "Informação importante para você Informação importante para você Informação importante para você Informação importante para você Informação importante para você Informação importante para você Informação importante para você Informação importante para você Informação importante para você ",
-      type: "info",
-    });
-  };
-
-  const handleDynamicIslandMessage = () => {
-    showMessage({
-      message: "Mensagem na ilha dinâmica!",
-      type: "success",
-    });
-  };
+  const renderComponentItem = (item: ComponentItem) => (
+    <TouchableOpacity
+      key={item.id}
+      style={styles.listItem}
+      onPress={item.onPress}
+      activeOpacity={0.7}
+    >
+      <View style={styles.itemContent}>
+        <View style={styles.iconContainer}>
+          <ThemedText style={styles.icon}>{item.icon}</ThemedText>
+        </View>
+        <View style={styles.textContainer}>
+          <ThemedText style={styles.itemTitle}>{item.title}</ThemedText>
+          <ThemedText style={styles.itemDescription}>{item.description}</ThemedText>
+        </View>
+        <View style={styles.chevronContainer}>
+          <ThemedText style={styles.chevron}>›</ThemedText>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
-    <ThemedView style={styles.container}>
-      <View style={styles.content}>
-        <ThemedText style={styles.title}>FlashMessage Demo</ThemedText>
-
-        <TouchableOpacity
-          style={[styles.button, styles.successButton]}
-          onPress={handleSuccessMessage}
-        >
-          <ThemedText style={styles.buttonText}>Success Message</ThemedText>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, styles.errorButton]}
-          onPress={handleErrorMessage}
-        >
-          <ThemedText style={styles.buttonText}>Error Message</ThemedText>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, styles.warningButton]}
-          onPress={handleWarningMessage}
-        >
-          <ThemedText style={styles.buttonText}>Warning Message</ThemedText>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, styles.infoButton]}
-          onPress={handleInfoMessage}
-        >
-          <ThemedText style={styles.buttonText}>Info Message</ThemedText>
-        </TouchableOpacity>
-
-        <ThemedText style={styles.sectionTitle}>Device Info</ThemedText>
-
-        <ThemedText style={styles.infoText}>
-          Safe Area Top: {safeAreaTop}px
-        </ThemedText>
-
-        <ThemedText style={styles.infoText}>
-          Has Dynamic Island: {hasDynamicIsland ? "Sim" : "Não"}
-        </ThemedText>
-
-        {hasDynamicIsland && (
-          <>
-            <ThemedText style={styles.sectionTitle}>
-              Dynamic Island Test
-            </ThemedText>
-
-            <TouchableOpacity
-              style={[styles.button, styles.dynamicIslandButton]}
-              onPress={handleDynamicIslandMessage}
-            >
-              <ThemedText style={styles.buttonText}>
-                Testar Ilha Dinâmica
-              </ThemedText>
-            </TouchableOpacity>
-          </>
-        )}
-      </View>
-    </ThemedView>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+      <ScrollView 
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+        bounces={true}
+      >
+        <View style={styles.listContainer}>
+          {components.map(renderComponentItem)}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff", // Fundo escuro
+    backgroundColor: colors.systemGroupedBackground,
   },
-  content: {
+  scrollView: {
     flex: 1,
+  },
+  scrollContent: {
+    paddingTop: 20,
+    paddingBottom: 34,
+  },
+  listContainer: {
+    paddingHorizontal: 16,
+  },
+  listItem: {
+    backgroundColor: colors.systemSecondaryGroupedBackground,
+    borderRadius: 10,
+    marginBottom: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: colors.shadowColor,
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: colors.shadowOpacity,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 1,
+      },
+    }),
+  },
+  itemContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    minHeight: 60,
+  },
+  iconContainer: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: colors.systemTertiaryGroupedBackground,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
-    gap: 20,
+    marginRight: 16,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 30,
-    color: "#fff",
+  icon: {
+    fontSize: 22,
   },
-  button: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 8,
-    minWidth: 200,
-    alignItems: "center",
+  textContainer: {
+    flex: 1,
+    justifyContent: "center",
   },
-  successButton: {
-    backgroundColor: "#28a745",
-  },
-  errorButton: {
-    backgroundColor: "#dc3545",
-  },
-  warningButton: {
-    backgroundColor: "#ffc107",
-  },
-  infoButton: {
-    backgroundColor: "#17a2b8",
-  },
-  buttonText: {
-    color: "#fff",
+  itemTitle: {
+    fontSize: 17,
     fontWeight: "600",
+    color: colors.label,
+    marginBottom: 3,
+    lineHeight: 22,
+  },
+  itemDescription: {
+    fontSize: 15,
+    color: colors.secondaryLabel,
+    fontWeight: "400",
+    lineHeight: 20,
+  },
+  chevronContainer: {
+    width: 20,
+    height: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 12,
+  },
+  chevron: {
     fontSize: 16,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginTop: 30,
-    marginBottom: 15,
-    color: "#fff",
-  },
-  dynamicIslandButton: {
-    backgroundColor: "#6c757d",
-  },
-  infoText: {
-    fontSize: 16,
-    color: "#fff",
-    marginBottom: 10,
-    textAlign: "center",
+    color: colors.tertiaryLabel,
+    fontWeight: "400",
   },
 });
